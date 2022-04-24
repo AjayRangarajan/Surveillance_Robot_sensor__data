@@ -70,6 +70,8 @@ def sendDataToServer():
     print(f"Temperature: {temperature}\N{DEGREE SIGN} Celcius")
     print(f"Humidity: {humidity}%")
     ##print(f"gas: {gas}")
+    is_metal_detected = bool(metal)
+    is_gas_detected = bool(gas)
     if gas:
         print("gas detected!!!")
     else:
@@ -84,9 +86,8 @@ def sendDataToServer():
     hum ="%.1f" %humidity
     gas = "%.1f" %gas
     metal="%.1f" %metal
-    ##print(temp,hum,gas,metal)
-    is_metal_detected = bool(metal)
-    is_gas_detected = bool(gas)
+    print(temp,hum,gas,metal)
+    
     urllib.request.urlopen("https://iotcloud22.in/Army/post_value.php?value1="+temp+"&value2="+hum+"&value3="+gas+"&value4="+metal).read()
     ip_address = get_ip_address()
     PORT = 5000
@@ -99,6 +100,7 @@ def sendDataToServer():
     }
     try:
         requests.post(url, data=data)
+        print("sensor data successfully sent to the server.")
     except Exception:
         return "Cannot send data to the serve. Server is not listening."
 
